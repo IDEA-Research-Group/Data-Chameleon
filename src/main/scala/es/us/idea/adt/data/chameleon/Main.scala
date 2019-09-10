@@ -1,5 +1,7 @@
 package es.us.idea.adt.data.chameleon
 
+import es.us.idea.adt.data.chameleon.data.simple.{DateType, IntegerType}
+import es.us.idea.adt.data.chameleon.internal.dtf.udf.UDF
 import org.apache.spark.sql.SparkSession
 
 
@@ -41,39 +43,39 @@ object Main {
     //  }
     //} , DataTypes.IntegerType)
 
+    val translate = UDF((s: String) => {
+      0
+    }, new IntegerType)
+
     // Read the Dataset and apply the Data Transformation Functions
     val ds = spark.read.json(datasetPath)
         .chameleon(
           "ID" << t"customerID",
-          "CP" << (array(
-            array(t"contractedPower.period1", t"contractedPower.period4") -> max,
-            array(t"contractedPower.period2", t"contractedPower.period5") -> max,
-            array(t"contractedPower.period3", t"contractedPower.period6") -> max
-          ) iterate t"." -> toInt),
-          "Group" << (t"consumption" -> groupBy(t"power.period1", t"." -> count) iterate struct(
-            "potencia1" << t"__key",
-            "count" << t"result"
+          "T" << translate(t"tariff"),
+          "CP" << struct (
+            "p1" << array(t"contractedPower.period1", t"contractedPower.period4") -> max -> toInt,
+            "p2" << array(t"contractedPower.period2", t"contractedPower.period5") -> max -> toInt,
+            "p3" << array(t"contractedPower.period3", t"contractedPower.period6") -> max -> toInt
+          ),
+          "C" << (t"consumption" iterate array(
+            array(t"power.period1", t"power.period4") -> max,
+            array(t"power.period2", t"power.period5") -> max,
+            array(t"power.period3", t"power.period6") -> max
           ))
-        )
 
-    //val ds = spark.read.json(datasetPath)
-    //  .adt(
-    //    d"ID" < "customerID", //T1
-    //    d"T" < "tariff" / translate, //T2
-    //    d"CP" * ( //T3
-    //      max("contractedPower.period1", "contractedPower.period4") / asInt,
-    //      max("contractedPower.period2", "contractedPower.period5") / asInt,
-    //      max("contractedPower.period3", "contractedPower.period6") / asInt
-    //    ),
-    //    d"C" * ("consumption" &* ( //T4
-    //      (1 to 3).map(i => max(s"power.period$i", s"power.period${i+3}")) : _*
-    //      )),
-    //    d"AVG_C" + ( //T5
-    //      (1 to 3).map(i => d(s"p$i") < avg("consumption" & max(s"power.period$i", s"power.period${i+3}"))) : _*
-    //      ),
-    //    d"BD" * ("consumption" & reduce("endDate" / asDate("dd/MM/yyyy"), "startDate" / asDate("dd/MM/yyyy"))(daysBetweenDates)) //T6
-    //  )
-    //  .select("ID", "T", "CP", "C", "AVG_C", "BD")
+        ).chameleon(
+          "AVG_C" << struct(
+            "p1" << (t"C" iterate t"[0]") -> avg,
+            "p2" << (t"C" iterate t"[1]") -> avg,
+            "p3" << (t"C" iterate t"[2]") -> avg
+          )
+        ).select("ID", "T", "CP", "C", "AVG_C")
+
+    //"Group" << (t"consumption" -> groupBy(t"power.period1", t"." -> count) iterate struct(
+    //  "potencia1" << t"__key",
+    //  "count" << t"result"
+    //))
+
 
     // Show a preview of the Dataset and print its schema
     ds.show()
