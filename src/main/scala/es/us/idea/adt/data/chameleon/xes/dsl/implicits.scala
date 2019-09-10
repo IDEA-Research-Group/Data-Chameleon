@@ -15,9 +15,9 @@ import es.us.idea.adt.data.chameleon.internal.dtf.filter.Filter
 import es.us.idea.adt.data.chameleon.internal.dtf.filter.predicates.GreaterThan
 import es.us.idea.adt.data.chameleon.internal.dtf.flatten.Flatten
 import es.us.idea.adt.data.chameleon.internal.dtf.group.GroupBy
-import es.us.idea.adt.data.chameleon.json.conversor.{JsonDataConversor, JsonTypeConversor}
-import org.kitesdk.data.spi.JsonUtil
-
+//import es.us.idea.adt.data.chameleon.json.conversor.{JsonDataConversor, JsonTypeConversor}
+//import org.kitesdk.data.spi.JsonUtil
+/*
 object implicits {
 
   type Eval2DTF = Evaluable => DTFOperator
@@ -342,3 +342,4 @@ object implicits {
   }
 
 }
+*/

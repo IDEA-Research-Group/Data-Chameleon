@@ -5,12 +5,12 @@ import java.sql.Date
 import java.util
 
 import es.us.idea.adt.data.chameleon.internal.utils
-import org.deckfour.xes.model.{XAttribute, XEvent, XLog, XTrace}
-import org.deckfour.xes.model.impl._
-import org.deckfour.xes.out.XesXmlSerializer
+//import org.deckfour.xes.model.{XAttribute, XEvent, XLog, XTrace}
+//import org.deckfour.xes.model.impl._
+//import org.deckfour.xes.out.XesXmlSerializer
 
 import scala.collection.mutable
-
+/*
 object XesDataConversor {
 
   import scala.collection.JavaConverters._
@@ -118,3 +118,4 @@ object XesDataConversor {
   }
 
 }
+*/
