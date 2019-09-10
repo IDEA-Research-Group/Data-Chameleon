@@ -11,6 +11,7 @@ class ToInt(eval: Evaluable) extends DTFOperator {
   override def getValue(in: Any): Any = utils.TypeConversions.asInt(eval.getValue( in))
 
   override def evaluate(parentDataType: DataType): DataType = {
+    eval.evaluate(parentDataType)
     val dt = new IntegerType()
     this.dataType = Some(dt)
     dt

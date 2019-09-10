@@ -11,6 +11,7 @@ class ToString(eval: Evaluable) extends DTFOperator {
   override def getValue(in: Any): Any = utils.TypeConversions.asString(eval.getValue(in))
 
   override def evaluate(parentDataType: DataType): DataType = {
+    eval.evaluate(parentDataType)
     val dt = new StringType()
     this.dataType = Some(dt)
     dt

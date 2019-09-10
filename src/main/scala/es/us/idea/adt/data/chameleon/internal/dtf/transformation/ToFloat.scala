@@ -11,6 +11,7 @@ class ToFloat(eval: Evaluable) extends DTFOperator {
   override def getValue(in: Any): Any = utils.TypeConversions.asFloat(eval.getValue(in))
 
   override def evaluate(parentDataType: DataType): DataType = {
+    eval.evaluate(parentDataType)
     val dt = new FloatType()
     this.dataType = Some(dt)
     dt

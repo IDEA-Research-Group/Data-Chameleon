@@ -23,6 +23,7 @@ class ToDate(eval: Evaluable, format: String) extends DTFOperator {
   }
 
   override def evaluate(parentDataType: DataType): DataType = {
+    eval.evaluate(parentDataType)
     val dt = new DateType()
     this.dataType = Some(dt)
     dt
