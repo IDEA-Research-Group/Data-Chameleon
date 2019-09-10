@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.node.{ArrayNode, JsonNodeFactory, JsonNode
 import es.us.idea.adt.data.chameleon.internal.utils
 
 import scala.collection.JavaConversions
-
+/*
 object JsonDataConversor {
 
   import scala.collection.JavaConverters._
@@ -83,3 +83,4 @@ object JsonDataConversor {
   }
 
 }
+*/

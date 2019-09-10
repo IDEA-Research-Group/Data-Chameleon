@@ -4,7 +4,7 @@ import es.us.idea.adt.data.chameleon.data.{Attribute, DataType}
 import es.us.idea.adt.data.chameleon.data.complex.{ArrayType, StructType}
 import es.us.idea.adt.data.chameleon.data.simple._
 import org.apache.avro.Schema
-
+/*
 object JsonTypeConversor {
 
   import scala.collection.JavaConverters._
@@ -42,3 +42,4 @@ object JsonTypeConversor {
   }
 
 }
+*/
