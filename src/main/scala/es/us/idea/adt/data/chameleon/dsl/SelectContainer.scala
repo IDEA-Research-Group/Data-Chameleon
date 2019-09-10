@@ -29,15 +29,11 @@ class SelectContainer(path: String) extends ExpressionContainer {
   }
 
   def pathPointsToArray(path: String): Boolean = {
-    val pattern = "(?<=\\[)\\d+?(?=\\])".r
-    path match {
-      case pattern(_, _) => true
-      case _ => false
-    }
+    path.matches("^\\[\\d+\\]$")
   }
 
-  def  getIndexFromPath(path: String): Int = {
-    Try(path.replaceAll("[", "").replaceAll("]", "").toInt)
+  def getIndexFromPath(path: String): Int = {
+    Try(path.replaceAllLiterally("[", "").replaceAllLiterally("]", "").toInt)
       .toOption match {
       case Some(i: Int) => i
       case _ => throw new Exception(s"Error interpreting subpath $path. It was expected to be an index.")
